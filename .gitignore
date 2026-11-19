@@ -1,0 +1,99 @@
+# Secrets and local env
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+.cache/
+.hypothesis/
+*.cover
+.python-version
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# IDE / editor
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.cursor/
+!.cursor/rules/
+
+# OS / OneDrive noise
+.DS_Store
+Thumbs.db
+desktop.ini
+~$*
+
+# Logs and temp
+*.log
+logs/
+tmp/
+temp/
+_tmp_*/
+*.tmp
+
+# Local OCR / installer artifacts
+tesseract-installer.exe
+*.msi
+
+# Runtime outputs (generated; keep directory via .gitkeep)
+outputs/labelled/*
+outputs/unlabelled/*
+outputs/errors/*
+!outputs/**/.gitkeep
+reports/*.json
+reports/*.csv
+!reports/.gitkeep
+
+# Keep committed report markdown templates if present; ignore generated dumps
+docs/_dataset_inspection.json
+
+# Raw Drive mirror duplicate (canonical data lives under data/raw + data/ground_truth)
+data/raw_download/
+
+# Large local caches
+.tessdata/
+*.traineddata
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Streamlit
+.streamlit/secrets.toml
