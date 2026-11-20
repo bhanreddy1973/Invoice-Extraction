@@ -16,7 +16,10 @@ PRICING_EFFECTIVE_DATE = date(2026, 11, 19)
 
 # USD per 1M tokens. Free-tier models: 0.0. Update if switching to paid SKUs.
 MODEL_PRICES_PER_MILLION: dict[str, dict[str, float]] = {
+    "nvidia/nemotron-3.5-bolt-e4b": {"input": 0.0, "output": 0.0},
+    "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning": {"input": 0.0, "output": 0.0},
     "nvidia/nemotron-3-ultra-550b-a55b": {"input": 0.0, "output": 0.0},
+    "z-ai/glm-5.3-flash": {"input": 0.0, "output": 0.0},
     "moonshotai/kimi-k3.1-pro": {"input": 0.0, "output": 0.0},
 }
 

@@ -1,4 +1,4 @@
-"""High-level extraction service with retries."""
+"""High-level extraction service with retries and optional vision escalate."""
 
 from __future__ import annotations
 
@@ -32,6 +32,7 @@ logger = logging.getLogger(__name__)
 class ExtractionAttempt:
     raw_text: str
     error: str | None = None
+    mode: str = "text"  # text | vision
 
 
 @dataclass
@@ -40,6 +41,8 @@ class ExtractionResult:
     usages: list[LLMUsage] = field(default_factory=list)
     attempts: list[ExtractionAttempt] = field(default_factory=list)
     model_used: str | None = None
+    escalated_to_vision: bool = False
+    escalate_reason: str | None = None
 
 
 class Extractor:
@@ -53,11 +56,11 @@ class Extractor:
         self.provider = provider or NVIDIAProvider(self.settings)
         self.usage_tracker = usage_tracker or UsageTracker()
 
-    def extract(self, routed: RoutedDocument) -> ExtractionResult:
+    def extract(self, routed: RoutedDocument, *, force_vision: bool = False) -> ExtractionResult:
         if routed.route == "unreadable":
             raise UnreadableDocumentError(f"Document marked unreadable: {routed.path.name}")
 
-        use_vision = routed.route == "vision" or (
+        use_vision = force_vision or routed.route == "vision" or (
             (not routed.text or sum(c.isalnum() for c in routed.text) < 20) and bool(routed.images_png)
         )
 
@@ -65,10 +68,12 @@ class Extractor:
             if not routed.images_png:
                 raise UnreadableDocumentError(f"Vision route has no images: {routed.path.name}")
             base_user = USER_VISION_TEMPLATE.format(ocr_hint=routed.text or "")
+            mode = "vision"
         else:
             if not routed.text or sum(c.isalnum() for c in routed.text) < 20:
                 raise UnreadableDocumentError(f"Insufficient text for extraction: {routed.path.name}")
             base_user = USER_TEXT_TEMPLATE.format(document_text=routed.text)
+            mode = "text"
 
         attempts: list[ExtractionAttempt] = []
         usages: list[LLMUsage] = []
@@ -88,7 +93,7 @@ class Extractor:
             response = self._invoke(use_vision=use_vision, user=user, images=routed.images_png)
             usages.append(response.usage)
             self.usage_tracker.record(response.usage)
-            attempts.append(ExtractionAttempt(raw_text=response.content))
+            attempts.append(ExtractionAttempt(raw_text=response.content, mode=mode))
 
             try:
                 payload = extract_json_object(response.content)
@@ -98,6 +103,7 @@ class Extractor:
                     usages=usages,
                     attempts=attempts,
                     model_used=response.model,
+                    escalated_to_vision=force_vision,
                 )
             except (InvalidJSONError, SchemaValidationFailedError) as exc:
                 last_error = exc

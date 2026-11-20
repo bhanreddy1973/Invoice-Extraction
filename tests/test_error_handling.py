@@ -27,6 +27,6 @@ def test_file_too_large(tmp_path: Path):
 
 
 def test_cost_free_tier():
-    usage = LLMUsage(provider="nvidia", model="nvidia/nemotron-3-ultra-550b-a55b", input_tokens=1000, output_tokens=200)
+    usage = LLMUsage(provider="nvidia", model="z-ai/glm-5.3-flash", input_tokens=1000, output_tokens=200)
     est = CostTracker().estimate(usage)
     assert est.cost_usd == 0.0

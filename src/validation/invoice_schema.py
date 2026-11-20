@@ -16,6 +16,7 @@ class LineItem(BaseModel):
 
     description: str
     quantity: float | None = None
+    unit_price: float | None = None
     amount: float
 
 

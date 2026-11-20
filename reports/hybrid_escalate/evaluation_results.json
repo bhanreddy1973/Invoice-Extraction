@@ -1,0 +1,290 @@
+{
+  "mode": "hybrid",
+  "documents_evaluated": 10,
+  "field_accuracy": {
+    "is_invoice": {
+      "correct": 10,
+      "total": 10,
+      "accuracy": 1.0
+    },
+    "vendor": {
+      "correct": 10,
+      "total": 10,
+      "accuracy": 1.0
+    },
+    "invoice_number": {
+      "correct": 10,
+      "total": 10,
+      "accuracy": 1.0
+    },
+    "invoice_date": {
+      "correct": 10,
+      "total": 10,
+      "accuracy": 1.0
+    },
+    "currency": {
+      "correct": 10,
+      "total": 10,
+      "accuracy": 1.0
+    },
+    "line_items": {
+      "correct": 10,
+      "total": 10,
+      "accuracy": 1.0
+    },
+    "tax_total": {
+      "correct": 10,
+      "total": 10,
+      "accuracy": 1.0
+    },
+    "total": {
+      "correct": 10,
+      "total": 10,
+      "accuracy": 1.0
+    }
+  },
+  "schema_success_rate": 1.0,
+  "financial_success_rate": 1.0,
+  "overall_accuracy": 1.0,
+  "usage": {
+    "total_input_tokens": 19912,
+    "total_output_tokens": 9280,
+    "avg_input_tokens": 1991.2,
+    "avg_output_tokens": 928.0,
+    "total_cost_usd": 0.0,
+    "avg_cost_usd_per_document": 0.0,
+    "avg_latency_seconds": 13.319492850010283
+  },
+  "documents": [
+    {
+      "document": "L01.pdf",
+      "route": "pdf_text",
+      "model_used": "nvidia/nemotron-3.5-bolt-e4b",
+      "field_matches": {
+        "is_invoice": true,
+        "vendor": true,
+        "invoice_number": true,
+        "invoice_date": true,
+        "currency": true,
+        "tax_total": true,
+        "total": true,
+        "line_items": true
+      },
+      "schema_valid": true,
+      "financial_valid": true,
+      "overall_exact": true,
+      "error_code": null,
+      "input_tokens": 839,
+      "output_tokens": 317,
+      "cost_usd": 0.0,
+      "latency_seconds": 5.564887800021097
+    },
+    {
+      "document": "L02.jpg",
+      "route": "ocr->vision",
+      "model_used": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning",
+      "field_matches": {
+        "is_invoice": true,
+        "vendor": true,
+        "invoice_number": true,
+        "invoice_date": true,
+        "currency": true,
+        "tax_total": true,
+        "total": true,
+        "line_items": true
+      },
+      "schema_valid": true,
+      "financial_valid": true,
+      "overall_exact": true,
+      "error_code": null,
+      "input_tokens": 4809,
+      "output_tokens": 1545,
+      "cost_usd": 0.0,
+      "latency_seconds": 24.856727099977434
+    },
+    {
+      "document": "L03.pdf",
+      "route": "pdf_text",
+      "model_used": "nvidia/nemotron-3.5-bolt-e4b",
+      "field_matches": {
+        "is_invoice": true,
+        "vendor": true,
+        "invoice_number": true,
+        "invoice_date": true,
+        "currency": true,
+        "tax_total": true,
+        "total": true,
+        "line_items": true
+      },
+      "schema_valid": true,
+      "financial_valid": true,
+      "overall_exact": true,
+      "error_code": null,
+      "input_tokens": 968,
+      "output_tokens": 346,
+      "cost_usd": 0.0,
+      "latency_seconds": 4.3328817000146955
+    },
+    {
+      "document": "L04.pdf",
+      "route": "pdf_text",
+      "model_used": "nvidia/nemotron-3.5-bolt-e4b",
+      "field_matches": {
+        "is_invoice": true,
+        "vendor": true,
+        "invoice_number": true,
+        "invoice_date": true,
+        "currency": true,
+        "tax_total": true,
+        "total": true,
+        "line_items": true
+      },
+      "schema_valid": true,
+      "financial_valid": true,
+      "overall_exact": true,
+      "error_code": null,
+      "input_tokens": 1695,
+      "output_tokens": 1571,
+      "cost_usd": 0.0,
+      "latency_seconds": 18.865016299998388
+    },
+    {
+      "document": "L05.pdf",
+      "route": "pdf_text",
+      "model_used": "nvidia/nemotron-3.5-bolt-e4b",
+      "field_matches": {
+        "is_invoice": true,
+        "vendor": true,
+        "invoice_number": true,
+        "invoice_date": true,
+        "currency": true,
+        "tax_total": true,
+        "total": true,
+        "line_items": true
+      },
+      "schema_valid": true,
+      "financial_valid": true,
+      "overall_exact": true,
+      "error_code": null,
+      "input_tokens": 1096,
+      "output_tokens": 648,
+      "cost_usd": 0.0,
+      "latency_seconds": 8.245313700055704
+    },
+    {
+      "document": "L06.pdf",
+      "route": "pdf_text",
+      "model_used": "nvidia/nemotron-3.5-bolt-e4b",
+      "field_matches": {
+        "is_invoice": true,
+        "vendor": true,
+        "invoice_number": true,
+        "invoice_date": true,
+        "currency": true,
+        "tax_total": true,
+        "total": true,
+        "line_items": true
+      },
+      "schema_valid": true,
+      "financial_valid": true,
+      "overall_exact": true,
+      "error_code": null,
+      "input_tokens": 956,
+      "output_tokens": 259,
+      "cost_usd": 0.0,
+      "latency_seconds": 3.694548700004816
+    },
+    {
+      "document": "L07.pdf",
+      "route": "pdf_text",
+      "model_used": "nvidia/nemotron-3.5-bolt-e4b",
+      "field_matches": {
+        "is_invoice": true,
+        "vendor": true,
+        "invoice_number": true,
+        "invoice_date": true,
+        "currency": true,
+        "tax_total": true,
+        "total": true,
+        "line_items": true
+      },
+      "schema_valid": true,
+      "financial_valid": true,
+      "overall_exact": true,
+      "error_code": null,
+      "input_tokens": 863,
+      "output_tokens": 235,
+      "cost_usd": 0.0,
+      "latency_seconds": 3.385674500023015
+    },
+    {
+      "document": "L08.pdf",
+      "route": "pdf_text",
+      "model_used": "nvidia/nemotron-3.5-bolt-e4b",
+      "field_matches": {
+        "is_invoice": true,
+        "vendor": true,
+        "invoice_number": true,
+        "invoice_date": true,
+        "currency": true,
+        "tax_total": true,
+        "total": true,
+        "line_items": true
+      },
+      "schema_valid": true,
+      "financial_valid": true,
+      "overall_exact": true,
+      "error_code": null,
+      "input_tokens": 952,
+      "output_tokens": 69,
+      "cost_usd": 0.0,
+      "latency_seconds": 1.3986656999913976
+    },
+    {
+      "document": "L09.pdf",
+      "route": "ocr->vision",
+      "model_used": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning",
+      "field_matches": {
+        "is_invoice": true,
+        "vendor": true,
+        "invoice_number": true,
+        "invoice_date": true,
+        "currency": true,
+        "tax_total": true,
+        "total": true,
+        "line_items": true
+      },
+      "schema_valid": true,
+      "financial_valid": true,
+      "overall_exact": true,
+      "error_code": null,
+      "input_tokens": 3826,
+      "output_tokens": 2466,
+      "cost_usd": 0.0,
+      "latency_seconds": 35.67972390004434
+    },
+    {
+      "document": "L10.pdf",
+      "route": "ocr->vision",
+      "model_used": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning",
+      "field_matches": {
+        "is_invoice": true,
+        "vendor": true,
+        "invoice_number": true,
+        "invoice_date": true,
+        "currency": true,
+        "tax_total": true,
+        "total": true,
+        "line_items": true
+      },
+      "schema_valid": true,
+      "financial_valid": true,
+      "overall_exact": true,
+      "error_code": null,
+      "input_tokens": 3908,
+      "output_tokens": 1824,
+      "cost_usd": 0.0,
+      "latency_seconds": 27.17148909997195
+    }
+  ]
+}

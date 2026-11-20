@@ -1,0 +1,290 @@
+{
+  "mode": "vision",
+  "documents_evaluated": 10,
+  "field_accuracy": {
+    "is_invoice": {
+      "correct": 10,
+      "total": 10,
+      "accuracy": 1.0
+    },
+    "vendor": {
+      "correct": 10,
+      "total": 10,
+      "accuracy": 1.0
+    },
+    "invoice_number": {
+      "correct": 10,
+      "total": 10,
+      "accuracy": 1.0
+    },
+    "invoice_date": {
+      "correct": 10,
+      "total": 10,
+      "accuracy": 1.0
+    },
+    "currency": {
+      "correct": 10,
+      "total": 10,
+      "accuracy": 1.0
+    },
+    "line_items": {
+      "correct": 10,
+      "total": 10,
+      "accuracy": 1.0
+    },
+    "tax_total": {
+      "correct": 10,
+      "total": 10,
+      "accuracy": 1.0
+    },
+    "total": {
+      "correct": 10,
+      "total": 10,
+      "accuracy": 1.0
+    }
+  },
+  "schema_success_rate": 1.0,
+  "financial_success_rate": 1.0,
+  "overall_accuracy": 1.0,
+  "usage": {
+    "total_input_tokens": 39225,
+    "total_output_tokens": 17227,
+    "avg_input_tokens": 3922.5,
+    "avg_output_tokens": 1722.7,
+    "total_cost_usd": 0.0,
+    "avg_cost_usd_per_document": 0.0,
+    "avg_latency_seconds": 25.331365339981858
+  },
+  "documents": [
+    {
+      "document": "L01.pdf",
+      "route": "vision",
+      "model_used": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning",
+      "field_matches": {
+        "is_invoice": true,
+        "vendor": true,
+        "invoice_number": true,
+        "invoice_date": true,
+        "currency": true,
+        "tax_total": true,
+        "total": true,
+        "line_items": true
+      },
+      "schema_valid": true,
+      "financial_valid": true,
+      "overall_exact": true,
+      "error_code": null,
+      "input_tokens": 2902,
+      "output_tokens": 697,
+      "cost_usd": 0.0,
+      "latency_seconds": 11.991199199925177
+    },
+    {
+      "document": "L02.jpg",
+      "route": "vision",
+      "model_used": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning",
+      "field_matches": {
+        "is_invoice": true,
+        "vendor": true,
+        "invoice_number": true,
+        "invoice_date": true,
+        "currency": true,
+        "tax_total": true,
+        "total": true,
+        "line_items": true
+      },
+      "schema_valid": true,
+      "financial_valid": true,
+      "overall_exact": true,
+      "error_code": null,
+      "input_tokens": 3506,
+      "output_tokens": 886,
+      "cost_usd": 0.0,
+      "latency_seconds": 17.378476599929854
+    },
+    {
+      "document": "L03.pdf",
+      "route": "vision",
+      "model_used": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning",
+      "field_matches": {
+        "is_invoice": true,
+        "vendor": true,
+        "invoice_number": true,
+        "invoice_date": true,
+        "currency": true,
+        "tax_total": true,
+        "total": true,
+        "line_items": true
+      },
+      "schema_valid": true,
+      "financial_valid": true,
+      "overall_exact": true,
+      "error_code": null,
+      "input_tokens": 3030,
+      "output_tokens": 788,
+      "cost_usd": 0.0,
+      "latency_seconds": 14.196466500055976
+    },
+    {
+      "document": "L04.pdf",
+      "route": "vision",
+      "model_used": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning",
+      "field_matches": {
+        "is_invoice": true,
+        "vendor": true,
+        "invoice_number": true,
+        "invoice_date": true,
+        "currency": true,
+        "tax_total": true,
+        "total": true,
+        "line_items": true
+      },
+      "schema_valid": true,
+      "financial_valid": true,
+      "overall_exact": true,
+      "error_code": null,
+      "input_tokens": 12655,
+      "output_tokens": 8058,
+      "cost_usd": 0.0,
+      "latency_seconds": 108.45944320003036
+    },
+    {
+      "document": "L05.pdf",
+      "route": "vision",
+      "model_used": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning",
+      "field_matches": {
+        "is_invoice": true,
+        "vendor": true,
+        "invoice_number": true,
+        "invoice_date": true,
+        "currency": true,
+        "tax_total": true,
+        "total": true,
+        "line_items": true
+      },
+      "schema_valid": true,
+      "financial_valid": true,
+      "overall_exact": true,
+      "error_code": null,
+      "input_tokens": 3157,
+      "output_tokens": 2392,
+      "cost_usd": 0.0,
+      "latency_seconds": 33.82975409994833
+    },
+    {
+      "document": "L06.pdf",
+      "route": "vision",
+      "model_used": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning",
+      "field_matches": {
+        "is_invoice": true,
+        "vendor": true,
+        "invoice_number": true,
+        "invoice_date": true,
+        "currency": true,
+        "tax_total": true,
+        "total": true,
+        "line_items": true
+      },
+      "schema_valid": true,
+      "financial_valid": true,
+      "overall_exact": true,
+      "error_code": null,
+      "input_tokens": 3008,
+      "output_tokens": 1019,
+      "cost_usd": 0.0,
+      "latency_seconds": 15.52106709999498
+    },
+    {
+      "document": "L07.pdf",
+      "route": "vision",
+      "model_used": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning",
+      "field_matches": {
+        "is_invoice": true,
+        "vendor": true,
+        "invoice_number": true,
+        "invoice_date": true,
+        "currency": true,
+        "tax_total": true,
+        "total": true,
+        "line_items": true
+      },
+      "schema_valid": true,
+      "financial_valid": true,
+      "overall_exact": true,
+      "error_code": null,
+      "input_tokens": 2907,
+      "output_tokens": 1032,
+      "cost_usd": 0.0,
+      "latency_seconds": 14.54635049996432
+    },
+    {
+      "document": "L08.pdf",
+      "route": "vision",
+      "model_used": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning",
+      "field_matches": {
+        "is_invoice": true,
+        "vendor": true,
+        "invoice_number": true,
+        "invoice_date": true,
+        "currency": true,
+        "tax_total": true,
+        "total": true,
+        "line_items": true
+      },
+      "schema_valid": true,
+      "financial_valid": true,
+      "overall_exact": true,
+      "error_code": null,
+      "input_tokens": 3024,
+      "output_tokens": 203,
+      "cost_usd": 0.0,
+      "latency_seconds": 4.126511299982667
+    },
+    {
+      "document": "L09.pdf",
+      "route": "vision",
+      "model_used": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning",
+      "field_matches": {
+        "is_invoice": true,
+        "vendor": true,
+        "invoice_number": true,
+        "invoice_date": true,
+        "currency": true,
+        "tax_total": true,
+        "total": true,
+        "line_items": true
+      },
+      "schema_valid": true,
+      "financial_valid": true,
+      "overall_exact": true,
+      "error_code": null,
+      "input_tokens": 2518,
+      "output_tokens": 986,
+      "cost_usd": 0.0,
+      "latency_seconds": 14.188199799973518
+    },
+    {
+      "document": "L10.pdf",
+      "route": "vision",
+      "model_used": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning",
+      "field_matches": {
+        "is_invoice": true,
+        "vendor": true,
+        "invoice_number": true,
+        "invoice_date": true,
+        "currency": true,
+        "tax_total": true,
+        "total": true,
+        "line_items": true
+      },
+      "schema_valid": true,
+      "financial_valid": true,
+      "overall_exact": true,
+      "error_code": null,
+      "input_tokens": 2518,
+      "output_tokens": 1166,
+      "cost_usd": 0.0,
+      "latency_seconds": 19.07618510001339
+    }
+  ]
+}

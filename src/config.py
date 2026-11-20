@@ -35,6 +35,12 @@ class Settings:
     llm_timeout_seconds: float
     ocr_language: str
     tesseract_cmd: str | None
+    # hybrid = digital text + OCR fallback + vision
+    # vision = vision-only: no OCR; all docs (including digital PDFs) go to vision LLM
+    extraction_mode: str
+    batch_workers: int
+    batch_retries: int
+    batch_retry_backoff_seconds: float
     log_level: str
     enable_thinking: bool
     data_raw_labelled: Path
@@ -49,6 +55,10 @@ class Settings:
     def max_file_size_bytes(self) -> int:
         return self.max_file_size_mb * 1024 * 1024
 
+    @property
+    def disable_ocr(self) -> bool:
+        return self.extraction_mode.strip().lower() in {"vision", "vision_only", "no_ocr"}
+
 
 def get_settings() -> Settings:
     """Load settings from environment with project defaults."""
@@ -56,11 +66,17 @@ def get_settings() -> Settings:
     if tesseract and not Path(tesseract).exists():
         tesseract = None
 
+    mode = os.getenv("EXTRACTION_MODE", "hybrid").strip().lower()
+    if mode not in {"hybrid", "vision", "vision_only", "no_ocr"}:
+        mode = "hybrid"
+
     return Settings(
         nvidia_api_key=os.getenv("NVIDIA_API_KEY", ""),
         nvidia_base_url=os.getenv("NVIDIA_BASE_URL", "https://integrate.api.nvidia.com/v1"),
-        nvidia_text_model=os.getenv("NVIDIA_TEXT_MODEL", "nvidia/nemotron-3-ultra-550b-a55b"),
-        nvidia_vision_model=os.getenv("NVIDIA_VISION_MODEL", "moonshotai/kimi-k3.1-pro"),
+        nvidia_text_model=os.getenv("NVIDIA_TEXT_MODEL", "nvidia/nemotron-3.5-bolt-e4b"),
+        nvidia_vision_model=os.getenv(
+            "NVIDIA_VISION_MODEL", "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning"
+        ),
         max_file_size_mb=int(os.getenv("MAX_FILE_SIZE_MB", "20")),
         pdf_text_alnum_threshold=int(os.getenv("PDF_TEXT_ALNUM_THRESHOLD", "80")),
         financial_tolerance=Decimal(os.getenv("FINANCIAL_TOLERANCE", "0.05")),
@@ -68,6 +84,10 @@ def get_settings() -> Settings:
         llm_timeout_seconds=float(os.getenv("LLM_TIMEOUT_SECONDS", "120")),
         ocr_language=os.getenv("OCR_LANGUAGE", "eng"),
         tesseract_cmd=tesseract,
+        extraction_mode=mode,
+        batch_workers=max(1, int(os.getenv("BATCH_WORKERS", "10"))),
+        batch_retries=max(0, int(os.getenv("BATCH_RETRIES", "2"))),
+        batch_retry_backoff_seconds=float(os.getenv("BATCH_RETRY_BACKOFF_SECONDS", "2.0")),
         log_level=os.getenv("LOG_LEVEL", "INFO"),
         enable_thinking=_bool(os.getenv("NVIDIA_ENABLE_THINKING"), default=False),
         data_raw_labelled=PROJECT_ROOT / "data" / "raw" / "labelled",

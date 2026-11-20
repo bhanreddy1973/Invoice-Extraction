@@ -10,7 +10,7 @@ Return ONLY a single JSON object matching this schema exactly (no markdown, no c
   "invoice_number": string|null,
   "invoice_date": string|null,
   "currency": string|null,
-  "line_items": [{"description": string, "quantity": number|null, "amount": number}]|null,
+  "line_items": [{"description": string, "quantity": number|null, "unit_price": number|null, "amount": number}]|null,
   "tax_total": number|null,
   "total": number|null
 }
@@ -25,11 +25,13 @@ Rules:
 7. invoice_date is the issue date only (not due date / order date / PO date). Normalize to YYYY-MM-DD.
 8. currency is a 3-letter code (INR, USD, EUR, GBP, ...).
 9. Include every visible item-table row as a line item, preserving printed order.
-10. quantity may be null when not printed; amount is the row amount before tax.
-11. Discounts appearing as rows are line items with negative amounts.
-12. tax_total is the sum of tax lines; use 0 when the invoice shows zero/no tax.
-13. total is the final amount payable including tax.
-14. Do not confuse shipping/fees listed outside the item table unless they appear as line rows.
+10. quantity may be null when not printed.
+11. unit_price is the per-unit rate / price each when printed; null when not shown (flat fees, lumpsum rows).
+12. amount is the row amount before tax. When both quantity and unit_price are clearly printed, amount MUST equal quantity × unit_price.
+13. Discounts appearing as rows are line items with negative amounts (unit_price may be null).
+14. tax_total is the sum of tax lines; use 0 when the invoice shows zero/no tax.
+15. total is the final amount payable including tax.
+16. Do not confuse shipping/fees listed outside the item table unless they appear as line rows.
 """
 
 USER_TEXT_TEMPLATE = """Extract invoice fields from the following document text.

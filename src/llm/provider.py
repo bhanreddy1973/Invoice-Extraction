@@ -65,12 +65,16 @@ class NVIDIAProvider(BaseLLMProvider):
 
         started = time.perf_counter()
         try:
+            # Defaults aligned with NVIDIA Integrate examples for GLM Flash.
             completion = self.client.chat.completions.create(
                 model=model,
                 messages=messages,
-                temperature=0.1,
-                top_p=0.9,
+                temperature=0.5,
+                top_p=1.0,
                 max_tokens=4096,
+                frequency_penalty=0,
+                presence_penalty=0,
+                seed=0,
                 stream=False,
                 extra_body=extra_body or None,
             )

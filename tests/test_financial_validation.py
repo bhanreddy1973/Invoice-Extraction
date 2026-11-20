@@ -1,6 +1,6 @@
 from decimal import Decimal
 
-from src.validation.financial_validator import validate_financials
+from src.validation.financial_validator import apply_unit_price_priority, validate_financials
 from src.validation.invoice_schema import InvoiceExtraction
 
 
@@ -57,3 +57,48 @@ def test_negative_discount_line():
         }
     )
     assert validate_financials(inv).is_valid
+
+
+def test_unit_price_overwrites_wrong_amount():
+    inv = InvoiceExtraction.model_validate(
+        {
+            "is_invoice": True,
+            "vendor": "Acme",
+            "invoice_number": "1",
+            "invoice_date": "2026-03-14",
+            "currency": "INR",
+            "line_items": [
+                {
+                    "description": "A4",
+                    "quantity": 10,
+                    "unit_price": 320.0,
+                    "amount": 9999.0,  # wrong; should become 3200
+                }
+            ],
+            "tax_total": 576.0,
+            "total": 3776.0,
+        }
+    )
+    result = validate_financials(inv)
+    assert inv.line_items[0].amount == 3200.0
+    assert result.is_valid
+    assert result.amount_corrections == 1
+
+
+def test_unit_price_priority_skips_when_rate_missing():
+    inv = InvoiceExtraction.model_validate(
+        {
+            "is_invoice": True,
+            "vendor": "Acme",
+            "invoice_number": "1",
+            "invoice_date": "2026-03-14",
+            "currency": "INR",
+            "line_items": [
+                {"description": "A4", "quantity": 10, "unit_price": None, "amount": 3200.0}
+            ],
+            "tax_total": 576.0,
+            "total": 3776.0,
+        }
+    )
+    assert apply_unit_price_priority(inv) == 0
+    assert inv.line_items[0].amount == 3200.0

@@ -70,7 +70,7 @@ class PDFProcessor:
             has_meaningful_text=total_alnum >= self.alnum_threshold,
         )
 
-    def render_pages(self, path: Path, *, dpi: int = 200, max_pages: int = 5) -> list[bytes]:
+    def render_pages(self, path: Path, *, dpi: int = 150, max_pages: int = 5) -> list[bytes]:
         """Render PDF pages to PNG bytes for OCR or vision."""
         try:
             doc = pymupdf.open(path)

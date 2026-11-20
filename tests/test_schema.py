@@ -55,3 +55,28 @@ def test_nullable_quantity_allowed():
         }
     )
     assert model.line_items[0].quantity is None
+    assert model.line_items[0].unit_price is None
+
+
+def test_unit_price_in_public_dict():
+    model = InvoiceExtraction.model_validate(
+        {
+            "is_invoice": True,
+            "vendor": "A",
+            "invoice_number": "1",
+            "invoice_date": "2026-01-01",
+            "currency": "USD",
+            "line_items": [
+                {
+                    "description": "Widget",
+                    "quantity": 3,
+                    "unit_price": 12.5,
+                    "amount": 37.5,
+                }
+            ],
+            "tax_total": 0,
+            "total": 37.5,
+        }
+    )
+    public = model.to_public_dict()
+    assert public["line_items"][0]["unit_price"] == 12.5

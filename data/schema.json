@@ -15,10 +15,11 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["description", "quantity", "amount"],
+        "required": ["description", "quantity", "unit_price", "amount"],
         "properties": {
           "description": { "type": "string" },
           "quantity": { "type": ["number", "null"] },
+          "unit_price": { "type": ["number", "null"] },
           "amount": { "type": "number" }
         }
       }

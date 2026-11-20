@@ -77,17 +77,41 @@ class DocumentRouter:
 
     def _route_pdf(self, path: Path) -> RoutedDocument:
         info = self.pdf.open_info(path)
+
+        # Vision-only mode: render pages and send to vision LLM (no OCR, no text-only path)
+        if self.settings.disable_ocr:
+            png_pages = self.pdf.render_pages(path)
+            if not png_pages:
+                raise UnreadableDocumentError(f"No readable content in PDF: {path.name}")
+            return RoutedDocument(
+                path=path,
+                route="vision",
+                text=info.full_text if info.has_meaningful_text else None,
+                images_png=png_pages,
+                page_count=info.page_count,
+                ocr_alnum=0,
+                notes=[
+                    f"embedded_alnum={info.total_alnum}",
+                    "ocr_disabled",
+                    "vision_only",
+                    f"mode={self.settings.extraction_mode}",
+                ],
+            )
+
         if info.has_meaningful_text:
             return RoutedDocument(
                 path=path,
                 route="pdf_text",
                 text=info.full_text,
                 page_count=info.page_count,
-                notes=[f"embedded_alnum={info.total_alnum}"],
+                notes=[f"embedded_alnum={info.total_alnum}", f"mode={self.settings.extraction_mode}"],
             )
 
-        notes = [f"embedded_alnum={info.total_alnum}", "falling_back_to_ocr"]
         png_pages = self.pdf.render_pages(path)
+        if not png_pages:
+            raise UnreadableDocumentError(f"No readable content in PDF: {path.name}")
+
+        notes = [f"embedded_alnum={info.total_alnum}", "falling_back_to_ocr"]
         ocr_chunks: list[str] = []
         total_alnum = 0
         for png in png_pages:
@@ -106,14 +130,11 @@ class DocumentRouter:
                 images_png=png_pages,
                 page_count=info.page_count,
                 ocr_alnum=total_alnum,
-                notes=notes + [f"ocr_alnum={total_alnum}"],
+                notes=notes + [f"ocr_alnum={total_alnum}", f"mode={self.settings.extraction_mode}"],
             )
 
-        # Vision fallback for weak OCR
         notes.append(f"ocr_alnum={total_alnum}")
         notes.append("falling_back_to_vision")
-        if not png_pages:
-            raise UnreadableDocumentError(f"No readable content in PDF: {path.name}")
         return RoutedDocument(
             path=path,
             route="vision",
@@ -121,12 +142,24 @@ class DocumentRouter:
             images_png=png_pages,
             page_count=info.page_count,
             ocr_alnum=total_alnum,
-            notes=notes,
+            notes=notes + [f"mode={self.settings.extraction_mode}"],
         )
 
     def _route_image(self, path: Path) -> RoutedDocument:
         image = self.images.load(path)
         png = self.images.to_png_bytes(image)
+
+        if self.settings.disable_ocr:
+            return RoutedDocument(
+                path=path,
+                route="vision",
+                text=None,
+                images_png=[png],
+                page_count=1,
+                ocr_alnum=0,
+                notes=["ocr_disabled", "vision_only", f"mode={self.settings.extraction_mode}"],
+            )
+
         prepared = self.images.preprocess_for_ocr(image)
         result = self.ocr.extract(prepared)
         notes = [f"ocr_alnum={result.alnum_count}"]
@@ -138,7 +171,7 @@ class DocumentRouter:
                 images_png=[png],
                 page_count=1,
                 ocr_alnum=result.alnum_count,
-                notes=notes,
+                notes=notes + [f"mode={self.settings.extraction_mode}"],
             )
         notes.append("falling_back_to_vision")
         return RoutedDocument(
@@ -148,5 +181,5 @@ class DocumentRouter:
             images_png=[png],
             page_count=1,
             ocr_alnum=result.alnum_count,
-            notes=notes,
+            notes=notes + [f"mode={self.settings.extraction_mode}"],
         )

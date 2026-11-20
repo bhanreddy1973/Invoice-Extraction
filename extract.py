@@ -54,7 +54,7 @@ def main(argv: list[str] | None = None) -> int:
             "model_used": result.model_used,
             "notes": result.notes,
         }
-        print(json.dumps(meta, indent=2), file=sys.stderr)
+        print(json.dumps(meta, indent=2, default=str), file=sys.stderr)
     return 0
 
 
